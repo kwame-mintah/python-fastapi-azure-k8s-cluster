@@ -1,9 +1,7 @@
 class DemoService:
     stub_data = {
         "messageId": 1,
-        "example": {
-            "message": "Hello World."
-        },
+        "example": {"message": "Hello World."},
     }
 
     def return_stub_data(self):
