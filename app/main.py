@@ -11,7 +11,7 @@ app.include_router(versions.router)
 
 @app.get("/")
 async def root():
-    return {"message": "What a wonderful kind of day."}
+    return {"message": "FastAPI on Azure Kubernetes Cluster (AKS)"}
 
 
 if __name__ == "__main__":
