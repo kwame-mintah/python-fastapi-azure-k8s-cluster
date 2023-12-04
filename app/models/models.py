@@ -2,11 +2,11 @@ from pydantic import BaseModel, Field
 
 
 class Example(BaseModel):
-    placeholder: str = Field(None)
+    message: str = Field(None)
 
 
 class Message(BaseModel):
-    messages: int = Field(None, title="Message ID")
+    messageId: int = Field(None, title="Message ID")
     example: Example = Field(None)
 
 

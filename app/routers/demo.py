@@ -4,13 +4,13 @@ from app.services.demo_service import DemoService
 from ..dependencies import get_demo_service
 from ..models.models import Message
 
-router = APIRouter(prefix="/demo", tags=["dashboard"])
+router = APIRouter(prefix="/v1/hello", tags=["hello"])
 
 
 @router.get(
     "/",
-    operation_id="demoRoot",
-    summary="Demonstrating Bigger Applications",
+    operation_id="helloWorld",
+    summary="Demonstrating FastAPI on Azure K8S Cluster",
     response_model=Message,
 )
 async def root(
