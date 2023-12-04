@@ -6,12 +6,9 @@ client = TestClient(app)
 
 
 def test_get_demo_root():
-    response = client.get("/demo")
+    response = client.get("/v1/hello")
     assert response.status_code == 200
     assert response.json() == {
-        "messages": 1,
-        "example": {
-            "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-            "ut labore et dolore magna aliqua."
-        },
+        "messageId": 1,
+        "example": {"message": "Hello World."},
     }
