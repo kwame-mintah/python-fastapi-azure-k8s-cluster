@@ -19,6 +19,14 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - script: |
+        apt update
+        apt upgrade
+        add-apt-repository ppa:deadsnakes/ppa -y
+        apt update
+      workingDirectory: $(projectRoot)
+      displayName: "Update Ubuntu 20.04 and import PPA"
+
+    - script: |
         apt-get install python$(pythonVersion) -y --allow-change-held-packages
         apt-get install python$(pythonVersion)-venv -y --allow-change-held-packages
         apt-get install python3-pip --allow-downgrades -y --allow-change-held-packages
