@@ -1,0 +1,40 @@
+trigger:
+- main
+
+variables:
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+  # Project root folder. Point to the folder containing manage.py file.
+  projectRoot: $(System.DefaultWorkingDirectory)
+  # Python version: 3.12
+  pythonVersion: '3.12'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: BuildJob
+    pool:
+      name: $(projectPoolName)
+      vmImage: $(vmImageName)
+    steps:
+    - script: |
+        apt-get install python$(pythonVersion)-venv -y --allow-change-held-packages
+        apt-get install python3-pip --allow-downgrades -y --allow-change-held-packages
+      workingDirectory: $(projectRoot)
+      displayName: "Install pip and venv"
+
+    - script: |
+        python$(pythonVersion) -m venv antenv
+        source antenv/bin/activate
+        python$(pythonVersion) -m pip install --upgrade pip
+        pip install setup
+        pip install -r requirements.txt
+      workingDirectory: $(projectRoot)
+      displayName: "Install requirements"
+
+    - script: |
+        source antenv/bin/activate
+        pytest tests/ -v
+      workingDirectory: $(projectRoot)
+      displayName: "Run unit tests"
