@@ -19,10 +19,10 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - script: |
-        apt update
-        apt upgrade
+        apt-get update
+        apt-get upgrade
         add-apt-repository ppa:deadsnakes/ppa -y
-        apt update
+        apt-get update
       workingDirectory: $(projectRoot)
       displayName: "Update Ubuntu 20.04 and import PPA"
 
