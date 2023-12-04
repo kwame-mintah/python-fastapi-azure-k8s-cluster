@@ -19,6 +19,7 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - script: |
+        apt-get install python$(pythonVersion) -y --allow-change-held-packages
         apt-get install python$(pythonVersion)-venv -y --allow-change-held-packages
         apt-get install python3-pip --allow-downgrades -y --allow-change-held-packages
       workingDirectory: $(projectRoot)
