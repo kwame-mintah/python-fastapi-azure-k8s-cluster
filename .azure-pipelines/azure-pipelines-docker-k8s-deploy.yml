@@ -9,6 +9,8 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: $(projectDockerRegistryServiceConnection)
+  # Project root folder. Point to the folder file(s).
+  projectRoot: $(System.DefaultWorkingDirectory)
   imageRepository: $(projectImageRepository)
   containerRegistry: $(projectContainerRegistry)
   dockerfilePath: "**/Dockerfile"
