@@ -1,5 +1,7 @@
 trigger:
-  - main
+  branches:
+    include:
+      - refs/tags/v*
 
 resources:
   - repo: self
@@ -9,7 +11,7 @@ variables:
   dockerRegistryServiceConnection: $(projectDockerRegistryServiceConnection)
   imageRepository: $(projectImageRepository)
   containerRegistry: $(projectContainerRegistry)
-  dockerfilePath: "$(Build.SourcesDirectory/Dockerfile)"
+  dockerfilePath: "**/Dockerfile"
   tag: "$(Build.BuildId)"
 
   # Agent VM image name
