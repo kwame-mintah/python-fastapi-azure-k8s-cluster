@@ -51,6 +51,11 @@ stages:
             workingDirectory: $(projectRoot)
             displayName: "Install the Docker packages"
 
+          - script: |
+              service docker start
+            workingDirectory: $(projectRoot)
+            displayName: "Start the Docker service"
+
           - task: Docker@2
             displayName: "Build and push an image to container registry"
             inputs:
