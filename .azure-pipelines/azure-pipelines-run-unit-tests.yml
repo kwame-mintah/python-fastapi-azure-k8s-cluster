@@ -32,6 +32,7 @@ stages:
               apt-get install python$(pythonVersion) -y --allow-change-held-packages
               apt-get install python$(pythonVersion)-venv -y --allow-change-held-packages
               apt-get install python3-pip --allow-downgrades -y --allow-change-held-packages
+              rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
             workingDirectory: $(projectRoot)
             displayName: "Install pip and venv"
 
