@@ -7,13 +7,16 @@ resources:
   - repo: self
 
 variables:
+  azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
+  containerRegistry: $(projectContainerRegistry)
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: $(projectDockerRegistryServiceConnection)
+  dockerfilePath: "**/Dockerfile"
+  imagePullSecret: $(projectImagePullSecret)
+  imageRepository: $(projectImageRepository)
+  k8sNamespace: "default"
   # Project root folder. Point to the folder file(s).
   projectRoot: $(System.DefaultWorkingDirectory)
-  imageRepository: $(projectImageRepository)
-  containerRegistry: $(projectContainerRegistry)
-  dockerfilePath: "**/Dockerfile"
   tag: "$(Build.BuildId)"
 
   # Agent VM image name
@@ -66,3 +69,43 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
+          - upload: k8s
+            artifact: manifests
+
+  - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: Build
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy job
+        pool:
+          name: $(projectPoolName)
+          vmImage: $(vmImageName)
+        environment: "Develop Environment"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: KubernetesManifest@1
+                  displayName: Create imagePullSecret
+                  inputs:
+                    action: createSecret
+                    secretName: $(imagePullSecret)
+                    namespace: $(k8sNamespace)
+                    dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+                - task: KubernetesManifest@1
+                  displayName: Deploy to Kubernetes cluster
+                  inputs:
+                    action: deploy
+                    connectionType: "azureResourceManager"
+                    azureSubscriptionConnection:
+                    namespace: $(k8sNamespace)
+                    manifests: |
+                      $(System.ArtifactsDirectory)/k8s/deployment/deployment.yml
+                      $(System.ArtifactsDirectory)/k8s/deployment/service.yml
+                    imagePullSecrets: |
+                      $(imagePullSecret)
+                    containers: |
+                      $(containerRegistry)/$(imageRepository):$(tag)
+                      $(containerRegistry)/$(imageRepository):$(tag)
