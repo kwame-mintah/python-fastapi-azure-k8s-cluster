@@ -90,9 +90,9 @@ stages:
                   displayName: Create imagePullSecret
                   inputs:
                     action: createSecret
-                    secretName: $(imagePullSecret)
+                    secretName: $(projectImagePullSecret)
                     namespace: $(k8sNamespace)
-                    dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+                    dockerRegistryEndpoint: $(projectDockerRegistryServiceConnection)
 
                 - task: KubernetesManifest@1
                   displayName: Deploy to Kubernetes cluster
@@ -102,8 +102,8 @@ stages:
                     azureSubscriptionConnection:
                     namespace: $(k8sNamespace)
                     manifests: |
-                      $(System.ArtifactsDirectory)/k8s/deployment/deployment.yml
-                      $(System.ArtifactsDirectory)/k8s/deployment/service.yml
+                      $(System.ArtifactsDirectory)/k8s/deploy/deployment.yml
+                      $(System.ArtifactsDirectory)/k8s/deploy/service.yml
                     imagePullSecrets: |
                       $(imagePullSecret)
                     containers: |
