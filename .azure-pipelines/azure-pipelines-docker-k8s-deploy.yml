@@ -8,6 +8,8 @@ resources:
 
 variables:
   azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
+  azureResourceGroup: $(projectAzureResourceGroup)
+  kubernetesCluster: $(projectKubernetesCluster)
   containerRegistry: $(projectContainerRegistry)
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: $(projectDockerRegistryServiceConnection)
@@ -26,8 +28,8 @@ stages:
   - stage: Build
     displayName: Build and push stage docker image
     jobs:
-      - job: BuildDockerImage
-        displayName: Build
+      - job: Build
+        displayName: Build and push stage docker image
         timeoutInMinutes: "5"
         cancelTimeoutInMinutes: "3"
         pool:
@@ -92,6 +94,8 @@ stages:
                     action: createSecret
                     connectionType: "azureResourceManager"
                     azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
+                    azureResourceGroup: $(projectAzureResourceGroup)
+                    kubernetesCluster: $(projectKubernetesCluster)
                     secretName: $(projectImagePullSecret)
                     namespace: $(k8sNamespace)
                     dockerRegistryEndpoint: $(projectDockerRegistryServiceConnection)
@@ -102,12 +106,14 @@ stages:
                     action: deploy
                     connectionType: "azureResourceManager"
                     azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
+                    azureResourceGroup: $(projectAzureResourceGroup)
+                    kubernetesCluster: $(projectKubernetesCluster)
                     namespace: $(k8sNamespace)
                     manifests: |
                       $(System.ArtifactsDirectory)/manifests/deployment.yml
                       $(System.ArtifactsDirectory)/manifests/service.yml
                     imagePullSecrets: |
-                      $(imagePullSecret)
+                      $(projectImagePullSecret)
                     containers: |
                       $(containerRegistry)/$(imageRepository):$(tag)
                       $(containerRegistry)/$(imageRepository):$(tag)
