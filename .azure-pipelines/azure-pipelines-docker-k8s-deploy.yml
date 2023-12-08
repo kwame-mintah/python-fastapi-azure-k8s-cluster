@@ -26,7 +26,7 @@ stages:
   - stage: Build
     displayName: Build and push stage docker image
     jobs:
-      - job: Build Docker Image
+      - job: BuildDockerImage
         displayName: Build
         timeoutInMinutes: "5"
         cancelTimeoutInMinutes: "3"
@@ -74,7 +74,7 @@ stages:
 
   - stage: Deploy
     displayName: Deploy to AKS cluster
-    dependsOn: Build
+    dependsOn: BuildDockerImage
     jobs:
       - deployment: Deploy
         displayName: Deploy to AKS cluster
