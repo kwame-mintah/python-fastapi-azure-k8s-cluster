@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+  labels:
+    app: fastapi-service
+spec:
+  selector:
+    app: fastapi-service
+  ports:
+    - name: http
+      port: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-service
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-service
+  template:
+    metadata:
+      labels:
+        app: fastapi-service
+        version: v1
+    spec:
+      containers:
+        - name: fastapi-service
+          imagePullPolicy: Always
+          image: pythonfastapik8s.azurecr.io/pythonfastapik8s:220
+          env:
+            - name: SERVICE_VERSION
+              value: "TEST"
+          ports:
+            - containerPort: 8000
+              name: fastapi
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /docs
+            initialDelaySeconds: 15
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /docs
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "0.5"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
