@@ -74,8 +74,8 @@ stages:
 
           - script: |
               sed -e "s/\$TAG/$(tag)/g" deployment.template.yml > deployment.yml && rm deployment.template.yml
-            workingDirectory: $(projectRoot)
-            displayName: "Create deployment.yml with latest image"
+            workingDirectory: "$(projectRoot)/k8s"
+            displayName: "Create k8s deployment.yml with latest image tag"
 
           - upload: k8s
             artifact: manifests
@@ -118,8 +118,8 @@ stages:
 
                 - task: DownloadPipelineArtifact@2
                   inputs:
-                    artifactName: 'manifests'
-                    downloadPath: '$(System.ArtifactsDirectory)/manifests'
+                    artifactName: "manifests"
+                    downloadPath: "$(System.ArtifactsDirectory)/manifests"
 
                 - task: KubernetesManifest@1
                   displayName: Deploy to Kubernetes cluster
