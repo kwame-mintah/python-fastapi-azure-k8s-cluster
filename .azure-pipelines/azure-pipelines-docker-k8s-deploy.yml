@@ -74,7 +74,7 @@ stages:
 
   - stage: Deploy
     displayName: Deploy to AKS cluster
-    dependsOn: BuildDockerImage
+    dependsOn: Build
     jobs:
       - deployment: Deploy
         displayName: Deploy to AKS cluster
