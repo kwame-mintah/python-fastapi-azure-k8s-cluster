@@ -30,8 +30,8 @@ spec:
     spec:
       containers:
         - name: fastapi-service
-          imagePullPolicy: Always
-          image: pythonfastapik8s.azurecr.io/pythonfastapik8s
+          imagePullPolicy: IfNotPresent
+          image: pythonfastapik8s.azurecr.io/pythonfastapik8s:$TAG
           env:
             - name: SERVICE_VERSION
               value: "TEST"

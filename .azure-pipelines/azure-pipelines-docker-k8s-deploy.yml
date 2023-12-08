@@ -71,6 +71,12 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
+
+          - script: |
+              sed -e "s/\$TAG/$(tag)/g" deployment.template.yml > deployment.yml && rm deployment.template.yml
+            workingDirectory: $(projectRoot)
+            displayName: "Create deployment.yml with latest image"
+
           - upload: k8s
             artifact: manifests
 
