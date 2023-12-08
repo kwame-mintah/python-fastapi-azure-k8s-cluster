@@ -26,10 +26,10 @@ variables:
 
 stages:
   - stage: Build
-    displayName: Build and push stage docker image
+    displayName: Build and push docker image
     jobs:
       - job: Build
-        displayName: Build and push stage docker image
+        displayName: Build and push docker image
         timeoutInMinutes: "5"
         cancelTimeoutInMinutes: "3"
         pool:
@@ -88,6 +88,16 @@ stages:
           runOnce:
             deploy:
               steps:
+                - script: |
+                    if kubelogin; then
+                        echo "kubelogin command found, will skip install"
+                    else
+                        echo "kubelogin not found will install"
+                        az aks install-cli
+                    fi
+                  workingDirectory: $(projectRoot)
+                  displayName: "Install Kubectl and Kubectl login via azure cli"
+
                 - task: KubernetesManifest@1
                   displayName: Create imagePullSecret
                   inputs:
