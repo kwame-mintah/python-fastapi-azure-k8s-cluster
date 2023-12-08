@@ -24,9 +24,9 @@ variables:
 
 stages:
   - stage: Build
-    displayName: Build and push stage
+    displayName: Build and push stage docker image
     jobs:
-      - job: Build
+      - job: Build Docker Image
         displayName: Build
         timeoutInMinutes: "5"
         cancelTimeoutInMinutes: "3"
@@ -73,11 +73,11 @@ stages:
             artifact: manifests
 
   - stage: Deploy
-    displayName: Deploy stage
+    displayName: Deploy to AKS cluster
     dependsOn: Build
     jobs:
       - deployment: Deploy
-        displayName: Deploy job
+        displayName: Deploy to AKS cluster
         pool:
           name: $(projectPoolName)
           vmImage: $(vmImageName)
@@ -90,6 +90,8 @@ stages:
                   displayName: Create imagePullSecret
                   inputs:
                     action: createSecret
+                    connectionType: "azureResourceManager"
+                    azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
                     secretName: $(projectImagePullSecret)
                     namespace: $(k8sNamespace)
                     dockerRegistryEndpoint: $(projectDockerRegistryServiceConnection)
@@ -99,11 +101,11 @@ stages:
                   inputs:
                     action: deploy
                     connectionType: "azureResourceManager"
-                    azureSubscriptionConnection:
+                    azureSubscriptionConnection: $(projectAzureSubscriptionConnection)
                     namespace: $(k8sNamespace)
                     manifests: |
-                      $(System.ArtifactsDirectory)/k8s/deploy/deployment.yml
-                      $(System.ArtifactsDirectory)/k8s/deploy/service.yml
+                      $(System.ArtifactsDirectory)/manifests/deployment.yml
+                      $(System.ArtifactsDirectory)/manifests/service.yml
                     imagePullSecrets: |
                       $(imagePullSecret)
                     containers: |
