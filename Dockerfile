@@ -1,4 +1,4 @@
-FROM python:3.11.5
+FROM --platform=linux/amd64 python:3.11.5
 
 WORKDIR /code
 
