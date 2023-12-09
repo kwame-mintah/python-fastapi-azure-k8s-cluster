@@ -9,7 +9,7 @@ spec:
     app: fastapi-service
   ports:
     - name: http
-      port: 80
+      port: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,16 +36,16 @@ spec:
             - name: SERVICE_VERSION
               value: "TEST"
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               name: fastapi
           readinessProbe:
             httpGet:
-              port: 80
+              port: 8080
               path: /docs
             initialDelaySeconds: 15
           livenessProbe:
             httpGet:
-              port: 80
+              port: 8080
               path: /docs
             initialDelaySeconds: 15
             periodSeconds: 15
