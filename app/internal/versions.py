@@ -6,7 +6,7 @@ from packaging import version
 
 from app.models.models import Package
 
-router = APIRouter(prefix="/version", tags=["versions"])
+router = APIRouter(prefix="/v1/version", tags=["versions"])
 
 
 @router.get(
