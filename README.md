@@ -1,21 +1,14 @@
-# Python FastAPI Bigger Applications Template
+# Python FastAPI Azure K8S Cluster
 
 ![fastapi-0.103.2-informational](https://img.shields.io/badge/fastapi-0.103.2-informational)
 <a href="https://github.com/new?template_name=python-fastapi-bigger-applications-template&template_owner=kwame-mintah">
 <img src="https://img.shields.io/badge/use%20this-template-blue?logo=github">
 </a>
 
-This a template project, to demonstrate using FastAPI in a bigger application. The same file structure
-has been followed as per FastAPI [docs](https://fastapi.tiangolo.com/tutorial/bigger-applications/).
-
-This repository is intended as a quick-start and includes the following:
-
-- A `Dockerfile` to build the FastAPI application following [guidelines](https://docs.docker.com/develop/develop-images/guidelines/)
-- `docker-compose.yml` file to build and start the application
-- GitHub Action workflow to run linting and unit tests
-- Pre-commit hooks to run on each commit
-- Pydantic models as response models for endpoints
-- Unit and feature tests for endpoints
+This project demonstrates deploying a FastAPI application onto an Azure Kubernetes Cluster. Azure Pipelines
+have been created to build and push the service docker image to an Azure Container Registry. And also deploy the service
+to a Kubernetes cluster. Azure resources created have been written in Terraform can be found in Azure DevOps repository
+[here](https://dev.azure.com/k-space/k/_git/k-infrastructure-terraform).
 
 ## Usage
 
@@ -58,7 +51,7 @@ see `/azure-pipelines-docker-k8s-deploy.yml` and `/azure-pipelines-run-unit-test
 ### Pipeline variables (docker-k8s-deploy)
 
 | Variable                               | Description                                                              | Default value | Required? |
-| -------------------------------------- | ------------------------------------------------------------------------ | ------------- | --------- |
+|----------------------------------------|--------------------------------------------------------------------------|---------------|-----------|
 | projectPoolName                        | The Azure agent pool that the job will run on                            | N/A           | Yes       |
 | projectContainerRegistry               | The Azure Container Registry login server                                | N/A           | Yes       |
 | projectDockerRegistryServiceConnection | The service connection with Docker Registry (using basic authentication) | N/A           | Yes       |
@@ -66,6 +59,6 @@ see `/azure-pipelines-docker-k8s-deploy.yml` and `/azure-pipelines-run-unit-test
 
 ### Pipeline variables (run-unit-tests)
 
-| Variable                               | Description                                                              | Default value | Required? |
-| -------------------------------------- | ------------------------------------------------------------------------ | ------------- | --------- |
-| projectPoolName                        | The Azure agent pool that the job will run on                            | N/A           | Yes       |
+| Variable        | Description                                   | Default value | Required? |
+|-----------------|-----------------------------------------------|---------------|-----------|
+| projectPoolName | The Azure agent pool that the job will run on | N/A           | Yes       |
