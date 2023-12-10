@@ -10,5 +10,5 @@ def test_get_demo_root():
     assert response.status_code == 200
     assert response.json() == {
         "messageId": 1,
-        "example": {"message": "Hello World."},
+        "example": {"message": "Hello World deployed version is: v___."},
     }
