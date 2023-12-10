@@ -45,17 +45,24 @@ pytest tests/
 
 ## Deploy on Azure Web App
 
-This project has been configured to automatically run and deploy changes made to the `main` branch to an environment variable,
-see `/azure-pipelines-docker-k8s-deploy.yml` and `/azure-pipelines-run-unit-tests.yml` the following variables are required to be set for pipelines.
+This project has been configured to automatically run and deploy changes made to the `main` branch to an environment
+variable,
+see `/azure-pipelines-docker-k8s-deploy.yml` and `/azure-pipelines-run-unit-tests.yml` the following variables are
+required to be set for pipelines.
 
 ### Pipeline variables (docker-k8s-deploy)
 
-| Variable                               | Description                                                              | Default value | Required? |
-|----------------------------------------|--------------------------------------------------------------------------|---------------|-----------|
-| projectPoolName                        | The Azure agent pool that the job will run on                            | N/A           | Yes       |
-| projectContainerRegistry               | The Azure Container Registry login server                                | N/A           | Yes       |
-| projectDockerRegistryServiceConnection | The service connection with Docker Registry (using basic authentication) | N/A           | Yes       |
-| projectImageRepository                 | The docker image name to push to registry                                | N/A           | Yes       |
+| Variable                               | Description                                                                   | Default value | Required? |
+|----------------------------------------|-------------------------------------------------------------------------------|---------------|-----------|
+| projectAzureSubscriptionConnection     | The Azure Resource Manager service connection ID                              | N/A           | Yes       |
+| projectAzureResourceGroup              | The Azure resource group were the cluster exists in                           | N/A           | Yes       |
+| projectKubernetesCluster               | The Azure kubernetes cluster name                                             | N/A           | Yes       |
+| projectImagePullSecret                 | The Kubernetes secret name to be generated / used for pulling images from ACR | N/A           | Yes       |
+| k8sNamespace                           | The Kubernetes name space to deploy the service                               | default       | No        |
+| projectPoolName                        | The Azure agent pool that the job will run on                                 | N/A           | Yes       |
+| projectContainerRegistry               | The Azure container registry login server                                     | N/A           | Yes       |
+| projectDockerRegistryServiceConnection | The service connection with Docker Registry (using basic authentication)      | N/A           | Yes       |
+| projectImageRepository                 | The docker image name to push to registry                                     | N/A           | Yes       |
 
 ### Pipeline variables (run-unit-tests)
 
