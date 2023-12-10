@@ -34,7 +34,7 @@ spec:
           image: pythonfastapik8s.azurecr.io/pythonfastapik8s:$TAG
           env:
             - name: SERVICE_VERSION
-              value: "TEST"
+              value: "$TAG"
           ports:
             - containerPort: 8080
               name: fastapi

@@ -30,8 +30,8 @@ stages:
     jobs:
       - job: Build
         displayName: Build and push docker image
-        timeoutInMinutes: "5"
-        cancelTimeoutInMinutes: "3"
+        timeoutInMinutes: "15"
+        cancelTimeoutInMinutes: "10"
         pool:
           name: $(projectPoolName)
           vmImage: $(vmImageName)
