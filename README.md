@@ -4,11 +4,17 @@
 <a href="https://github.com/new?template_name=python-fastapi-bigger-applications-template&template_owner=kwame-mintah">
 <img src="https://img.shields.io/badge/use%20this-template-blue?logo=github">
 </a>
+[![Build Status](https://dev.azure.com/k-space/k/_apis/build/status%2Fdocker-k8s-cluster-deploy?branchName=main)](https://dev.azure.com/k-space/k/_build/latest?definitionId=10&branchName=main)
 
 This project demonstrates deploying a FastAPI application onto an Azure Kubernetes Cluster. Azure Pipelines
 have been created to build and push the service docker image to an Azure Container Registry. And also deploy the service
 to a Kubernetes cluster. Azure resources created have been written in Terraform can be found in Azure DevOps repository
 [here](https://dev.azure.com/k-space/k/_git/k-infrastructure-terraform).
+
+> [!NOTE]
+>
+> This repository was original created within Azure DevOps and is now being mirrored to this GitHub [repository](https://github.com/kwame-mintah/python-fastapi-azure-k8s-cluster).
+> Source of truth will always be the Azure DevOps [repository](https://dev.azure.com/k-space/k/_git/python-fastapi-azure-k8s-cluster)[^1].
 
 ## Usage
 
@@ -43,12 +49,15 @@ Unit tests are located in `/tests` directory.
 pytest tests/
 ```
 
-## Deploy on Azure Web App
+## Azure Pipelines (CI/CD)
 
-This project has been configured to automatically run and deploy changes made to the `main` branch to an environment
-variable,
-see `/azure-pipelines-docker-k8s-deploy.yml` and `/azure-pipelines-run-unit-tests.yml` the following variables are
-required to be set for pipelines.
+This project has two pipelines see files:
+- `/azure-pipelines-docker-k8s-deploy.yml`
+- `/azure-pipelines-run-unit-tests.yml`
+
+The tables below detail pipeline variables required, most of the values required for deploying FastAPI to Azure Kubernetes cluster, can be found with
+the terraform repository [here](https://dev.azure.com/k-space/k/_git/k-infrastructure-terraform). Additionally, as the orginasation / projected created,
+within Azure DevOps is private, these pipelines have been written to run on a [self-host build agent](https://github.com/kwame-mintah/azuredevops-selfhosted-agents-docker-compose) so YMMV.
 
 ### Pipeline variables (docker-k8s-deploy)
 
@@ -69,3 +78,5 @@ required to be set for pipelines.
 | Variable        | Description                                   | Default value | Required? |
 |-----------------|-----------------------------------------------|---------------|-----------|
 | projectPoolName | The Azure agent pool that the job will run on | N/A           | Yes       |
+
+^1: My Azure DevOps organisation / project is private.
