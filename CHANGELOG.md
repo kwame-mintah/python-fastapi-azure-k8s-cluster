@@ -1,3 +1,9 @@
+## v0.1.1 (2023-12-11)
+
+### Refactor
+
+- **summary**: update endpoint summary to include full stop
+
 ## v0.1.0 (2023-12-10)
 
 ### Feat
