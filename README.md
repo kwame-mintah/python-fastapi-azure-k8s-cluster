@@ -9,12 +9,12 @@
 This project demonstrates deploying a FastAPI application onto an Azure Kubernetes Cluster. Azure Pipelines
 have been created to build and push the service docker image to an Azure Container Registry. And also deploy the service
 to a Kubernetes cluster. Azure resources created have been written in Terraform can be found in Azure DevOps repository
-[here](https://dev.azure.com/k-space/k/_git/k-infrastructure-terraform).
+[here](https://dev.azure.com/k-space/k/_git/k-infrastructure-terraform) [^1].
 
 > [!NOTE]
 >
 > This repository was original created within Azure DevOps and is now being mirrored to this GitHub [repository](https://github.com/kwame-mintah/python-fastapi-azure-k8s-cluster).
-> Source of truth will always be the Azure DevOps [repository](https://dev.azure.com/k-space/k/_git/python-fastapi-azure-k8s-cluster)[^1].
+> Source of truth will always be the Azure DevOps [repository](https://dev.azure.com/k-space/k/_git/python-fastapi-azure-k8s-cluster).
 
 ## Usage
 
@@ -34,8 +34,8 @@ to a Kubernetes cluster. Azure resources created have been written in Terraform 
 
 ## Docker
 
-Running the `docker-compose.yml`, will build a new image python-fastapi-bigger-applications-template-fastapi:latest
-which will be used for the `fastapi` service within the container.
+Running the `docker-compose.yml`, will build a new image python-fastapi-azure-k8s-cluster-fastapi:latest which will be used for the `fastapi` service
+within the container.
 
 ```commandline
 docker-compose up -d
@@ -79,4 +79,4 @@ within Azure DevOps is private, these pipelines have been written to run on a [s
 |-----------------|-----------------------------------------------|---------------|-----------|
 | projectPoolName | The Azure agent pool that the job will run on | N/A           | Yes       |
 
-^1: My Azure DevOps organisation / project is private.
+^1: My Azure DevOps organisation / project is private, terraform repository is mirrored [here](https://github.com/kwame-mintah/terraform-azurerm-kubernetes-cluster) in GitHub.
