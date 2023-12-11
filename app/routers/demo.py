@@ -13,7 +13,7 @@ service_version = os.environ.get("SERVICE_VERSION", "___")
 @router.get(
     "/",
     operation_id="helloWorld",
-    summary="Demonstrating FastAPI on Azure K8S Cluster",
+    summary="Demonstrating FastAPI on Azure K8S Cluster.",
     response_model=Message,
 )
 async def root(
