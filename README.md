@@ -79,4 +79,4 @@ within Azure DevOps is private, these pipelines have been written to run on a [s
 |-----------------|-----------------------------------------------|---------------|-----------|
 | projectPoolName | The Azure agent pool that the job will run on | N/A           | Yes       |
 
-^1: My Azure DevOps organisation / project is private, terraform repository is mirrored [here](https://github.com/kwame-mintah/terraform-azurerm-kubernetes-cluster) in GitHub.
+[^1]: My Azure DevOps organisation / project is private, terraform repository is mirrored [here](https://github.com/kwame-mintah/terraform-azurerm-kubernetes-cluster) in GitHub.
